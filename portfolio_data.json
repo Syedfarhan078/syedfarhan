@@ -1,0 +1,264 @@
+[
+{
+  "model": "portfolio.bio",
+  "pk": 4,
+  "fields": {
+    "name": "Syed Farhan",
+    "title": "software engineer",
+    "sub_title": "engineering student / python programmer",
+    "about_text": "Hi, I'm Syed Farhan, a Computer Science Engineering student and software developer. I build backend applications, write automation scripts, and solve algorithmic challenges.\r\n\r\nI mainly work with Python, JavaScript/TypeScript, Django, and web systems. I also share code tutorials and projects on my YouTube channel (@CodeByFarhan) and practice data structures and algorithms on LeetCode (syedfarhan078).\r\n\r\nMy interests include backend engineering, software optimization, and open-source contributions. I love configuring my development environments and building utility packages that solve real-world problems.",
+    "github_url": "https://github.com/Syedfarhan078",
+    "linkedin_url": "https://www.linkedin.com/in/syed-farhan-581b83314/",
+    "email": "syedfarhan3599@gmail.com",
+    "resume_url": "/static/portfolio/resume.pdf",
+    "os_name": "Windows 11",
+    "host": "~/0xFarhan",
+    "kernel": "Windows NT 10.0",
+    "shell": "PowerShell",
+    "de_wm": "Windows 11 Desktop",
+    "terminal": "cmd",
+    "cpu": "Intel Core i5 (12 cores)",
+    "memory": "16GB DDR5 RAM"
+  }
+},
+{
+  "model": "portfolio.skill",
+  "pk": 37,
+  "fields": {
+    "name": "Python",
+    "category": "languages",
+    "proficiency": 90,
+    "icon_class": "fab fa-python",
+    "order": 1
+  }
+},
+{
+  "model": "portfolio.skill",
+  "pk": 38,
+  "fields": {
+    "name": "JavaScript",
+    "category": "languages",
+    "proficiency": 80,
+    "icon_class": "fab fa-js",
+    "order": 2
+  }
+},
+{
+  "model": "portfolio.skill",
+  "pk": 39,
+  "fields": {
+    "name": "HTML5 / CSS3",
+    "category": "languages",
+    "proficiency": 92,
+    "icon_class": "fab fa-html5",
+    "order": 3
+  }
+},
+{
+  "model": "portfolio.skill",
+  "pk": 40,
+  "fields": {
+    "name": "React",
+    "category": "frontend",
+    "proficiency": 75,
+    "icon_class": "fab fa-react",
+    "order": 1
+  }
+},
+{
+  "model": "portfolio.skill",
+  "pk": 41,
+  "fields": {
+    "name": "Vanilla CSS",
+    "category": "frontend",
+    "proficiency": 90,
+    "icon_class": "fab fa-css3-alt",
+    "order": 2
+  }
+},
+{
+  "model": "portfolio.skill",
+  "pk": 42,
+  "fields": {
+    "name": "Django",
+    "category": "backend",
+    "proficiency": 85,
+    "icon_class": "fas fa-leaf",
+    "order": 1
+  }
+},
+{
+  "model": "portfolio.skill",
+  "pk": 43,
+  "fields": {
+    "name": "Node.js",
+    "category": "backend",
+    "proficiency": 70,
+    "icon_class": "fab fa-node-js",
+    "order": 2
+  }
+},
+{
+  "model": "portfolio.skill",
+  "pk": 44,
+  "fields": {
+    "name": "PostgreSQL",
+    "category": "backend",
+    "proficiency": 80,
+    "icon_class": "fas fa-database",
+    "order": 3
+  }
+},
+{
+  "model": "portfolio.skill",
+  "pk": 45,
+  "fields": {
+    "name": "Git & GitHub",
+    "category": "tools",
+    "proficiency": 90,
+    "icon_class": "fab fa-github",
+    "order": 1
+  }
+},
+{
+  "model": "portfolio.skill",
+  "pk": 46,
+  "fields": {
+    "name": "Docker",
+    "category": "tools",
+    "proficiency": 75,
+    "icon_class": "fab fa-docker",
+    "order": 2
+  }
+},
+{
+  "model": "portfolio.skill",
+  "pk": 47,
+  "fields": {
+    "name": "Linux / Shell",
+    "category": "tools",
+    "proficiency": 85,
+    "icon_class": "fab fa-linux",
+    "order": 3
+  }
+},
+{
+  "model": "portfolio.skill",
+  "pk": 48,
+  "fields": {
+    "name": "SQL",
+    "category": "languages",
+    "proficiency": 85,
+    "icon_class": "fab fa-sql",
+    "order": 3
+  }
+},
+{
+  "model": "portfolio.project",
+  "pk": 10,
+  "fields": {
+    "title": "Django Real-Time Chat Application",
+    "description": "A real-time chat application built with Django, Django Channels, WebSockets, Daphne, and Redis.\r\n\r\nThe application allows users to enter chat rooms and exchange messages in real time without refreshing the page.",
+    "image_url": "",
+    "github_url": "https://github.com/Syedfarhan078/Real-Time-Chat-Application-with-Django-Channels",
+    "live_url": "",
+    "tech_stack": "Python, Django, Django Channels, Redis, WebSockets",
+    "order": 2,
+    "is_featured": true
+  }
+},
+{
+  "model": "portfolio.project",
+  "pk": 11,
+  "fields": {
+    "title": "An IQ Too High",
+    "description": "Think you're smarter than everyone? Put your brain to the test with hilarious trick questions where the most obvious answer is usually wrong!",
+    "image_url": "https://private-user-images.githubusercontent.com/174268900/619554570-e24acdc6-8899-49ba-8b3e-86c8de66ed8c.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODY",
+    "github_url": "https://github.com/Syedfarhan078/an-iq-too-high",
+    "live_url": "https://an-iq-too-high-tricky-questions.streamlit.app/",
+    "tech_stack": "Python,  Streamlit, Git, GitHub",
+    "order": 1,
+    "is_featured": true
+  }
+},
+{
+  "model": "portfolio.project",
+  "pk": 12,
+  "fields": {
+    "title": "Chomsky Normal Form (CNF) Converter – Flask Web App",
+    "description": "An interactive web application that converts any user-defined Context-Free Grammar (CFG) into Chomsky Normal Form (CNF) while clearly displaying each transformation step. Built using Python, Flask, HTML, CSS, and a clean UI for easy grammar visualization.",
+    "image_url": "https://private-user-images.githubusercontent.com/174268900/525258865-4119cf0d-71d0-45ef-be3a-b732ab8b77d3.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODY",
+    "github_url": "https://github.com/Syedfarhan078/cfg_to_cnf_converter",
+    "live_url": "https://github.com/Syedfarhan078/cfg_to_cnf_converter",
+    "tech_stack": "Python,  Streamlit, Git, GitHub",
+    "order": 4,
+    "is_featured": true
+  }
+},
+{
+  "model": "portfolio.project",
+  "pk": 13,
+  "fields": {
+    "title": "CODE MIND – AI Coding Assistant Chatbot",
+    "description": "CODE MIND is an AI-powered coding assistant chatbot built using Python, Streamlit, and the Groq API. It helps developers and students solve programming-related problems, debug code, understand concepts, and receive AI-powered coding assistance through an interactive web interface.",
+    "image_url": "https://private-user-images.githubusercontent.com/174268900/620080814-de067f50-08be-4d12-9f84-a2ff28b89ff8.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODY",
+    "github_url": "https://github.com/Syedfarhan078/-CodeMind-AI-Coding-Assistant",
+    "live_url": "https://github.com/Syedfarhan078/-CodeMind-AI-Coding-Assistant",
+    "tech_stack": "Python,  Streamlit, Git, GitHub",
+    "order": 3,
+    "is_featured": true
+  }
+},
+{
+  "model": "portfolio.project",
+  "pk": 14,
+  "fields": {
+    "title": "Air Quality Index (AQI) Monitoring & Visualization Web App",
+    "description": "This project is an interactive and user-friendly Air Quality Index Monitoring Web Application that allows users to explore AQI levels at the city level for multiple countries across different years. The system presents AQI data through visual graphs, informative facts, city-specific stories, and a nature-themed background to enhance user experience.",
+    "image_url": "https://private-user-images.githubusercontent.com/174268900/523602582-c3008913-ff5e-4564-8f61-47a08df5000f.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODY",
+    "github_url": "https://github.com/Syedfarhan078/AQI-Visualization",
+    "live_url": "https://github.com/Syedfarhan078/AQI-Visualization",
+    "tech_stack": "Python,  Streamlit, Git, GitHub",
+    "order": 6,
+    "is_featured": false
+  }
+},
+{
+  "model": "portfolio.project",
+  "pk": 15,
+  "fields": {
+    "title": "Eye-Controlled Mouse",
+    "description": "The Eye-Controlled Mouse is an assistive technology prototype that allows users to control the computer cursor using eye movements instead of traditional input devices like a mouse or trackpad. The system uses a webcam, OpenCV, and Tkinter to detect the user’s eyes, track gaze direction, and simulate mouse movements and clicks.",
+    "image_url": "",
+    "github_url": "https://github.com/Syedfarhan078/eye_controlled_mouse",
+    "live_url": "",
+    "tech_stack": "Python, OpenCV",
+    "order": 5,
+    "is_featured": false
+  }
+},
+{
+  "model": "portfolio.experience",
+  "pk": 7,
+  "fields": {
+    "company": "Personal / Academic Project · 2026",
+    "role": "Backend Developer — Career Catalyst",
+    "start_date": "Jan 2025",
+    "end_date": "Present",
+    "description": "Built a career guidance platform for engineering students using Django, Python, HTML, CSS and JavaScript.\r\nImplemented authentication, student profiles, career roadmaps, learning resources and assessment modules.\r\nDesigned the application using Django's modular app architecture and ORM.\r\nImplemented computer-vision-based assessment proctoring concepts using BlazeFace and COCO-SSD.\r\nUsed Git and GitHub for version control and project development.",
+    "order": 2
+  }
+},
+{
+  "model": "portfolio.experience",
+  "pk": 8,
+  "fields": {
+    "company": "Engineering Undergrad",
+    "role": "Passionate Programmer",
+    "start_date": "Aug 2023",
+    "end_date": "Present",
+    "description": "Learning algorithms, database structures, and systems architecture.\r\nCollaborating on study projects and contributing to open-source code repositories.",
+    "order": 1
+  }
+}
+]

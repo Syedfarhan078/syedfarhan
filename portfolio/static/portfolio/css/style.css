@@ -1,0 +1,870 @@
+/* CSS Reset and CSS Variable Declarations */
+:root {
+    /* Dark Theme Variable Tokens (Default) */
+    --bg-primary: #050608;
+    --bg-secondary: #0c0d12;
+    --card-bg: #0d1117;
+    --card-hover-border: rgba(240, 246, 252, 0.2);
+    --border-color: rgba(240, 246, 252, 0.1);
+    
+    --text-primary: #f0f6fc;
+    --text-secondary: #8b949e;
+    --text-muted: #484f58;
+    
+    --accent: #238636; /* GitHub Active Green */
+    --accent-glow: rgba(35, 134, 54, 0.2);
+    
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: 'Space Mono', SFMono-Regular, monospace;
+    
+    --transition-curve: cubic-bezier(0.4, 0, 0.2, 1);
+    
+    --social-linkedin: #0a66c2;
+    --social-twitter: #1c1d1f;
+}
+
+[data-theme="light"] {
+    /* Light Theme Variable Tokens */
+    --bg-primary: #f6f8fa;
+    --bg-secondary: #eaeef2;
+    --card-bg: #ffffff;
+    --card-hover-border: rgba(31, 35, 40, 0.3);
+    --border-color: rgba(31, 35, 40, 0.15);
+    
+    --text-primary: #24292f;
+    --text-secondary: #57606a;
+    --text-muted: #8c959f;
+    
+    --accent: #2da44e; /* GitHub Active Green (Light) */
+    --accent-glow: rgba(45, 164, 78, 0.15);
+    
+    --social-twitter: #e5e7eb;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Top Ambient Glowing Spotlight Gradients */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 650px;
+    background: 
+        radial-gradient(circle at 10% 0%, rgba(99, 102, 241, 0.16) 0%, transparent 55%),
+        radial-gradient(circle at 90% 0%, rgba(217, 119, 6, 0.13) 0%, transparent 55%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+[data-theme="light"] body::before {
+    background: 
+        radial-gradient(circle at 10% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 55%),
+        radial-gradient(circle at 90% 0%, rgba(217, 119, 6, 0.04) 0%, transparent 55%);
+}
+
+/* Custom Scrollbar Configs */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--bg-secondary);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* Page Bento Grid Container */
+.bento-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+/* Header */
+.bento-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.5rem;
+}
+
+.header-logo a {
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: opacity 0.3s;
+}
+
+.header-logo a:hover {
+    opacity: 0.7;
+}
+
+.logo-accent {
+    color: var(--accent);
+    font-weight: 800;
+    margin-right: 0.15rem;
+}
+
+.header-nav {
+    display: flex;
+    gap: 1.2rem;
+}
+
+.header-nav a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: color 0.3s;
+}
+
+.header-nav a:hover,
+.header-nav a.active {
+    color: var(--text-primary);
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 1rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+#theme-toggle:hover {
+    background-color: var(--bg-secondary);
+}
+
+/* Profile Intro block */
+.profile-intro-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding-bottom: 1.5rem;
+}
+
+.profile-name {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+}
+
+.profile-tagline {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.profile-description {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 58ch;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.profile-description p {
+    line-height: 1.65;
+}
+
+.highlight-link {
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.3s;
+}
+
+.highlight-link:hover {
+    opacity: 0.75;
+}
+
+.profile-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.inline-btn {
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: opacity 0.3s;
+}
+
+.inline-btn i {
+    font-size: 0.7rem;
+}
+
+.inline-btn:hover {
+    opacity: 0.75;
+}
+
+.dot-separator {
+    color: var(--text-muted);
+}
+
+.contact-hint a {
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* Bento Grid System Dashboard */
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+    width: 100%;
+}
+
+.col-span-2 {
+    grid-column: span 2;
+}
+
+/* Bento Card Frame */
+.bento-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: border-color 0.4s var(--transition-curve), 
+                transform 0.4s var(--transition-curve), 
+                box-shadow 0.4s var(--transition-curve);
+    will-change: transform, box-shadow;
+}
+
+.bento-card:hover {
+    transform: scale(0.985);
+    border-color: var(--card-hover-border);
+}
+
+/* Card Links overlay */
+.card-link-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    cursor: pointer;
+}
+
+/* Card Headers */
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.logo-icon {
+    font-size: 1.75rem;
+    color: var(--text-primary);
+}
+
+.header-title {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-title .label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.header-title .sub-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.card-header-small {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.2rem;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.icon-accent {
+    color: var(--accent);
+}
+
+/* Card 1: GitHub Card Widget Specifics */
+.github-heatmap-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 1.2rem;
+    padding: 0.25rem 0;
+}
+
+.heatmap-grid {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    gap: 4px;
+    width: 100%;
+    min-width: 320px;
+}
+
+.heatmap-cell {
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: var(--bg-secondary);
+    border-radius: 2px;
+}
+
+/* Heatmap commit coloring classes */
+.cell-weight-0 { background-color: var(--bg-secondary); }
+.cell-weight-1 { background-color: #0e4429; }
+.cell-weight-2 { background-color: #006d32; }
+.cell-weight-3 { background-color: #26a641; }
+.cell-weight-4 { background-color: #39d353; }
+
+[data-theme="light"] .cell-weight-1 { background-color: #9be9a8; }
+[data-theme="light"] .cell-weight-2 { background-color: #40c463; }
+[data-theme="light"] .cell-weight-3 { background-color: #30a14e; }
+[data-theme="light"] .cell-weight-4 { background-color: #216e39; }
+
+.github-stats-footer {
+    display: flex;
+    gap: 1.5rem;
+    font-family: var(--font-mono);
+}
+
+.stat-item {
+    display: flex;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+}
+
+.stat-num {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.stat-lbl {
+    color: var(--text-secondary);
+}
+
+/* Cards 2 & 3: Branded Connect Social Cards */
+.social-card {
+    height: 140px;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.social-icon-wrapper {
+    font-size: 1.85rem;
+    color: var(--text-primary);
+    transition: transform 0.4s var(--transition-curve);
+}
+
+.social-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+}
+
+.social-meta .title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.social-meta .comment {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+/* Hover coloring transitions */
+.linkedin-card:hover {
+    background-color: var(--social-linkedin);
+    border-color: transparent;
+}
+.linkedin-card:hover .social-icon-wrapper {
+    transform: rotate(-5deg) scale(1.1);
+    color: #ffffff;
+}
+.linkedin-card:hover .social-meta .title {
+    color: #ffffff;
+}
+.linkedin-card:hover .social-meta .comment {
+    color: rgba(255,255,255,0.7);
+}
+
+.youtube-card:hover {
+    background-color: #ff0000;
+    border-color: transparent;
+}
+.youtube-card:hover .social-icon-wrapper {
+    transform: rotate(5deg) scale(1.1);
+    color: #ffffff;
+}
+.youtube-card:hover .social-meta .title {
+    color: #ffffff;
+}
+.youtube-card:hover .social-meta .comment {
+    color: rgba(255,255,255,0.7);
+}
+
+.leetcode-card:hover {
+    background-color: #ffa116;
+    border-color: transparent;
+}
+.leetcode-card:hover .social-icon-wrapper {
+    transform: rotate(-5deg) scale(1.1);
+    color: #ffffff;
+}
+.leetcode-card:hover .social-meta .title {
+    color: #ffffff;
+}
+.leetcode-card:hover .social-meta .comment {
+    color: rgba(255,255,255,0.7);
+}
+.codewars-card:hover {
+    background-color: #b1361e;
+    border-color: transparent;
+}
+.codewars-card:hover .social-icon-wrapper {
+    transform: rotate(5deg) scale(1.1);
+    color: #ffffff;
+}
+.codewars-card:hover .social-meta .title {
+    color: #ffffff;
+}
+.codewars-card:hover .social-meta .comment {
+    color: rgba(255,255,255,0.7);
+}
+
+/* Card 4: Tech Stack Infinite Marquee */
+.marquee-card {
+    padding: 1.5rem 0;
+    height: 70px;
+    justify-content: center;
+}
+
+.marquee-track-wrapper {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    /* Left and right fading edges */
+    mask-image: linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+}
+
+.marquee-track {
+    display: flex;
+    gap: 2.2rem;
+    width: max-content;
+    animation: marquee-scroll 24s linear infinite;
+}
+
+.marquee-track:hover {
+    animation-play-state: paused;
+}
+
+.marquee-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+}
+
+.marquee-item i {
+    font-size: 1.05rem;
+    color: var(--accent);
+}
+
+@keyframes marquee-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Card 5: Homelab Specifications list */
+.homelab-card {
+    justify-content: flex-start;
+}
+
+.homelab-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+}
+
+.spec-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.02);
+    padding-bottom: 0.2rem;
+}
+
+.spec-k {
+    color: var(--text-muted);
+}
+
+.spec-v {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Card 6: Projects List Cards */
+.projects-card {
+    justify-content: flex-start;
+}
+
+.projects-list-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    width: 100%;
+}
+
+.project-box {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.8rem;
+    transition: border-color 0.3s var(--transition-curve), 
+                transform 0.3s var(--transition-curve);
+}
+
+.project-box:hover {
+    border-color: var(--card-hover-border);
+    transform: translateY(-2px);
+}
+
+.project-box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.project-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.project-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.25rem;
+}
+
+.mini-tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: var(--text-secondary);
+}
+
+.project-links {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.proj-link {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.proj-link:hover {
+    color: var(--text-primary);
+}
+
+/* Card 7: Work timeline list */
+.work-card {
+    justify-content: flex-start;
+}
+
+.timeline-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.timeline-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    border-left: 2px solid var(--border-color);
+    padding-left: 0.75rem;
+}
+
+.timeline-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.timeline-meta .role {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.timeline-meta .company {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+
+.timeline-row .duration {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+/* Card 8: Minimal AJAX Contact Form */
+.contact-card {
+    justify-content: flex-start;
+}
+
+.bento-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.bento-form input,
+.bento-form textarea {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.65rem 0.8rem;
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.bento-form input:focus,
+.bento-form textarea:focus {
+    border-color: var(--text-secondary);
+}
+
+.bento-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.submit-btn {
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    align-self: flex-start;
+}
+
+.submit-btn:hover {
+    opacity: 0.85;
+}
+
+.error-msg {
+    color: #ff5f56;
+    font-size: 0.75rem;
+    margin-top: 0.2rem;
+    display: none;
+}
+
+/* Alerts box */
+.alert-box {
+    padding: 0.7rem 0.9rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    display: none;
+    margin-top: 0.5rem;
+}
+
+.alert-box.success {
+    background: rgba(35, 134, 54, 0.1);
+    border: 1px solid #238636;
+    color: #238636;
+}
+
+.alert-box.error {
+    background: rgba(255, 95, 86, 0.1);
+    border: 1px solid #ff5f56;
+    color: #ff5f56;
+}
+
+/* Footer Section */
+.bento-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.footer-separator {
+    color: var(--accent);
+    margin: 0 0.4rem;
+    font-weight: 700;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Back to Top Floating Button */
+#back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: opacity 0.3s var(--transition-curve),
+                transform 0.3s var(--transition-curve),
+                border-color 0.3s var(--transition-curve);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+#back-to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+#back-to-top:hover {
+    border-color: var(--card-hover-border);
+    transform: translateY(-3px);
+}
+
+/* Responsive Grid Breakdowns */
+@media (max-width: 768px) {
+    .bento-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .col-span-2 {
+        grid-column: span 1;
+    }
+    
+    .bento-container {
+        padding: 2rem 1.2rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}

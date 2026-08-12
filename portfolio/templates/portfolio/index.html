@@ -1,0 +1,288 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ bio.name }} | Portfolio</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="{% static 'portfolio/images/favicon.jpg' %}">
+    
+    <!-- Google Fonts (Inter & Space Mono) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'portfolio/css/style.css' %}">
+</head>
+<body>
+
+    <!-- Main Container -->
+    <div class="bento-container">
+        
+        <!-- Header -->
+        <header class="bento-header">
+            <div class="header-logo">
+                <a href="/"><span class="logo-accent">~</span>/0xFarhan</a>
+            </div>
+            <nav class="header-nav">
+                <a href="#about" class="active">about</a>
+                <a href="#projects">projects</a>
+                <a href="#work">work</a>
+                <a href="#contact">contact</a>
+            </nav>
+            <div class="header-controls">
+                <button id="theme-toggle" aria-label="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Profile Section -->
+        <section id="about" class="profile-intro-section">
+            <h1 class="profile-name">{{ bio.name }}</h1>
+            <div class="profile-tagline">{{ bio.sub_title }}</div>
+            
+            <div class="profile-description">
+                <p>Hi, I'm Farhan (known as <a href="{{ bio.github_url }}" class="highlight-link" target="_blank">0xFarhan</a> on the internet), currently an undergraduate.I started coding with curiosity about how software works, and that curiosity grew into a passion for building practical applications. Since then, I've been exploring Python, Django, AI/ML, and Machine Learning while continuously building and experimenting with new projects.</p>
+                <p>I mainly work with Python, SQL, Java, and Django. I have a deep admiration for the Unix philosophy, minimalism, and open-source software.</p>
+                <p>My interests include backend systems, database performance, and container orchestration. I also self-host my own home servers and manage networking systems inside my Homelab.</p>
+            </div>
+            
+            <div class="profile-links">
+                {% if bio.resume_url %}
+                <a href="{{ bio.resume_url }}" class="inline-btn" target="_blank">
+                    resume <i class="fas fa-arrow-up-right-from-square"></i>
+                </a>
+                {% endif %}
+                <a href="https://github.com/Syedfarhan078.gpg" class="inline-btn" target="_blank">
+                    gpg key <i class="fas fa-arrow-up-right-from-square"></i>
+                </a>
+                <span class="dot-separator">•</span>
+                <span class="contact-hint">reach me at <a href="mailto:{{ bio.email }}" class="inline-email-link">{{ bio.email }}</a></span>
+            </div>
+        </section>
+
+        <!-- Bento Grid Dashboard -->
+        <div class="bento-grid">
+            
+            <!-- Card 1: GitHub Profile Activity Widget (Spans 2 columns) -->
+            <div class="bento-card github-card col-span-2">
+                <a href="{{ bio.github_url }}" target="_blank" class="card-link-overlay"></a>
+                <div class="card-header">
+                    <i class="fab fa-github logo-icon"></i>
+                    <div class="header-title">
+                        <span class="label">GitHub</span>
+                        <span class="sub-label">My Projects</span>
+                    </div>
+                </div>
+                <!-- Mock contribution graph grid -->
+                <div class="github-heatmap-wrapper">
+                    <div class="heatmap-grid" id="github-heatmap">
+                        <!-- Filled by JS with random active green shades -->
+                    </div>
+                </div>
+                <div class="github-stats-footer">
+                    <div class="stat-item"><span class="stat-num">24</span><span class="stat-lbl">repositories</span></div>
+                    <div class="stat-item"><span class="stat-num">30</span><span class="stat-lbl">stars</span></div>
+                    <div class="stat-item"><span class="stat-num">9</span><span class="stat-lbl">followers</span></div>
+                </div>
+            </div>
+
+            <!-- Card 2: LinkedIn Connect Widget (Spans 1 column) -->
+            <div class="bento-card social-card linkedin-card">
+                <a href="{{ bio.linkedin_url }}" target="_blank" class="card-link-overlay"></a>
+                <div class="social-icon-wrapper">
+                    <i class="fab fa-linkedin-in"></i>
+                </div>
+                <div class="social-meta">
+                    <span class="title">LinkedIn</span>
+                    <span class="comment">(professional)</span>
+                </div>
+            </div>
+
+            <!-- Card 3: YouTube Channel Widget (Spans 1 column) -->
+            <div class="bento-card social-card youtube-card">
+                <a href="https://www.youtube.com/@CodeByFarhan" target="_blank" class="card-link-overlay"></a>
+                <div class="social-icon-wrapper">
+                    <i class="fab fa-youtube"></i>
+                </div>
+                <div class="social-meta">
+                    <span class="title">YouTube</span>
+                    <span class="comment">(@CodeByFarhan)</span>
+                </div>
+            </div>
+
+            <!-- Card 3b: LeetCode Widget (Spans 1 column) -->
+            <div class="bento-card social-card leetcode-card">
+                <a href="https://leetcode.com/u/syedfarhan078/" target="_blank" class="card-link-overlay"></a>
+                <div class="social-icon-wrapper">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="social-meta">
+                    <span class="title">LeetCode</span>
+                    <span class="comment">(problem solving)</span>
+                </div>
+            </div>
+
+            <!-- Card 4b: Codewars Widget (Spans 1 column) -->
+            <div class="bento-card social-card codewars-card">
+                <a href="https://www.codewars.com/users/Syedfarhan078" target="_blank" class="card-link-overlay"></a>
+                <div class="social-icon-wrapper">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <div class="social-meta">
+                    <span class="title">Codewars</span>
+                    <span class="comment">(solve katas)</span>
+                </div>
+            </div>
+
+            <!-- Card 4: Tech Stack Sliding Marquee (Spans 2 columns) -->
+            <div class="bento-card marquee-card col-span-2">
+                <div class="marquee-track-wrapper">
+                    <div class="marquee-track">
+                        <!-- First list of tech nodes -->
+                        <div class="marquee-item"><i class="fab fa-python"></i> Python</div>
+                        <div class="marquee-item"><i class="fas fa-leaf"></i> Django</div>
+                        <div class="marquee-item"><i class="fab fa-react"></i> React</div>
+                        <div class="marquee-item"><i class="fab fa-js"></i> JavaScript</div>
+                        <div class="marquee-item"><i class="fab fa-js"></i> TypeScript</div>
+                        <div class="marquee-item"><i class="fab fa-docker"></i> Docker</div>
+                        <div class="marquee-item"><i class="fab fa-linux"></i> Linux</div>
+                        <div class="marquee-item"><i class="fab fa-git-alt"></i> Git</div>
+                        <div class="marquee-item"><i class="fas fa-database"></i> PostgreSQL</div>
+                        <!-- Duplicated list for infinite scroll loop -->
+                        <div class="marquee-item"><i class="fab fa-python"></i> Python</div>
+                        <div class="marquee-item"><i class="fas fa-leaf"></i> Django</div>
+                        <div class="marquee-item"><i class="fab fa-react"></i> React</div>
+                        <div class="marquee-item"><i class="fab fa-js"></i> JavaScript</div>
+                        <div class="marquee-item"><i class="fab fa-js"></i> TypeScript</div>
+                        <div class="marquee-item"><i class="fab fa-docker"></i> Docker</div>
+                        <div class="marquee-item"><i class="fab fa-linux"></i> Linux</div>
+                        <div class="marquee-item"><i class="fab fa-git-alt"></i> Git</div>
+                        <div class="marquee-item"><i class="fas fa-database"></i> PostgreSQL</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5: Homelab Specifications Node (Spans 2 columns) -->
+            <div class="bento-card homelab-card col-span-2">
+                <div class="card-header-small">
+                    <i class="fas fa-server icon-accent"></i>
+                    <span>Homelab Specs</span>
+                </div>
+                <div class="homelab-body">
+                    <div class="spec-row"><span class="spec-k">OS:</span> <span class="spec-v">{{ bio.os_name }}</span></div>
+                    <div class="spec-row"><span class="spec-k">Shell:</span> <span class="spec-v">{{ bio.shell }}</span></div>
+                    <div class="spec-row"><span class="spec-k">Host:</span> <span class="spec-v">{{ bio.host }}</span></div>
+                    <div class="spec-row"><span class="spec-k">CPU:</span> <span class="spec-v">i7 (20 cores)</span></div>
+                    <div class="spec-row"><span class="spec-k">Memory:</span> <span class="spec-v">{{ bio.memory }}</span></div>
+                </div>
+            </div>
+
+            <!-- Card 6: Projects Grid Block (Spans 2 columns) -->
+            <div id="projects" class="bento-card projects-card col-span-2">
+                <div class="card-header-small">
+                    <i class="fas fa-code-branch icon-accent"></i>
+                    <span>Projects</span>
+                </div>
+                <div class="projects-list-wrapper">
+                    {% for project in projects %}
+                    <div class="project-box">
+                        <div class="project-box-header">
+                            <h3 class="project-title">{{ project.title }}</h3>
+                            <div class="project-links">
+                                {% if project.github_url %}
+                                <a href="{{ project.github_url }}" target="_blank" title="GitHub" class="proj-link"><i class="fab fa-github"></i></a>
+                                {% endif %}
+                                {% if project.live_url %}
+                                <a href="{{ project.live_url }}" target="_blank" title="Live Link" class="proj-link"><i class="fas fa-external-link-alt"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <p class="project-desc">{{ project.description }}</p>
+                        <div class="project-tags">
+                            {% for tag in project.tech_stack.split %}
+                            <span class="mini-tag">{{ tag|cut:"," }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="no-data-msg">No projects registered yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Card 7: Work Timeline Card (Spans 1 column) -->
+            <div id="work" class="bento-card work-card">
+                <div class="card-header-small">
+                    <i class="fas fa-briefcase icon-accent"></i>
+                    <span>Work / Milestones</span>
+                </div>
+                <div class="timeline-list">
+                    {% for exp in experiences %}
+                    <div class="timeline-row">
+                        <div class="timeline-meta">
+                            <span class="role">{{ exp.role }}</span>
+                            <span class="company">{{ exp.company }}</span>
+                        </div>
+                        <span class="duration">{{ exp.start_date }} - {{ exp.end_date }}</span>
+                    </div>
+                    {% empty %}
+                    <p class="no-data-msg">No timeline items registered yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Card 8: Minimal AJAX Contact Form (Spans 2 columns) -->
+            <div id="contact" class="bento-card contact-card col-span-2">
+                <div class="card-header-small">
+                    <i class="fas fa-paper-plane icon-accent"></i>
+                    <span>Drop a line</span>
+                </div>
+                <form id="bento-contact-form" class="bento-form" method="POST" action="{% url 'portfolio:contact_submit' %}">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-field">
+                            <input type="text" id="form-name" name="name" required placeholder="Name">
+                            <span class="error-msg" id="err-name"></span>
+                        </div>
+                        <div class="form-field">
+                            <input type="email" id="form-email" name="email" required placeholder="Email">
+                            <span class="error-msg" id="err-email"></span>
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <textarea id="form-message" name="message" required placeholder="Type your message here..."></textarea>
+                        <span class="error-msg" id="err-message"></span>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submit-btn">
+                        Transmit <i class="fas fa-paper-plane"></i>
+                    </button>
+                    
+                    <div id="contact-success" class="alert-box success"></div>
+                    <div id="contact-error" class="alert-box error"></div>
+                </form>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="bento-footer">
+            <p>&copy; <span id="current-year">2026</span> {{ bio.name }} <span class="footer-separator">•</span> Built with Django &amp; Vanilla CSS</p>
+        </footer>
+
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" aria-label="Back to Top"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- Custom JavaScript -->
+    <script src="{% static 'portfolio/js/script.js' %}"></script>
+</body>
+</html>
