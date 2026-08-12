@@ -27,3 +27,6 @@ media/
 # OS
 Thumbs.db
 desktop.ini
+
+# staticfile
+staticfiles/
