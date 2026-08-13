@@ -30,3 +30,5 @@ desktop.ini
 
 # staticfile
 staticfiles/
+
+portfolio_data_utf8.json
