@@ -79,3 +79,13 @@ class PortfolioTests(TestCase):
         json_data = response.json()
         self.assertEqual(len(json_data['projects']), 1)
         self.assertEqual(json_data['projects'][0]['title'], 'Test Project')
+
+    def test_api_live_stats(self):
+        response = self.client.get(reverse('portfolio:api_live_stats'))
+        self.assertEqual(response.status_code, 200)
+        json_data = response.json()
+        self.assertIn('leetcode', json_data)
+        self.assertIn('codewars', json_data)
+        self.assertIn('solved', json_data['leetcode'])
+        self.assertIn('solved', json_data['codewars'])
+        self.assertIn('rank', json_data['codewars'])

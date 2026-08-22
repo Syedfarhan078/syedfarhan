@@ -9,4 +9,5 @@ urlpatterns = [
     path('api/neofetch/', views.api_neofetch, name='api_neofetch'),
     path('api/projects/', views.api_projects, name='api_projects'),
     path('api/about/', views.api_about, name='api_about'),
+    path('api/stats/', views.api_live_stats, name='api_live_stats'),
 ]

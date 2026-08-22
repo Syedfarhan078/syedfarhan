@@ -28,11 +28,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateThemeIcon(theme) {
         const icon = themeBtn.querySelector('i');
-        if (theme === 'dark') {
-            icon.className = 'fas fa-moon';
-        } else {
-            icon.className = 'fas fa-sun';
-        }
+        icon.style.transform = 'scale(0.1) rotate(-180deg)';
+        
+        setTimeout(() => {
+            if (theme === 'dark') {
+                icon.className = 'fas fa-moon';
+            } else {
+                icon.className = 'fas fa-sun';
+            }
+            icon.style.transform = 'scale(1) rotate(0deg)';
+            
+            // Clean up inline styles so hover transforms work correctly
+            setTimeout(() => {
+                icon.style.transform = '';
+            }, 400);
+        }, 150);
     }
 
     // ---------------------------------------------
@@ -44,17 +54,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const cols = 24; // 24 weeks representation
         const totalCells = rows * cols;
         
+        // Generate single dynamic floating tooltip element
+        let tooltipEl = document.getElementById('heatmap-tooltip');
+        if (!tooltipEl) {
+            tooltipEl = document.createElement('div');
+            tooltipEl.id = 'heatmap-tooltip';
+            tooltipEl.className = 'heatmap-tooltip';
+            document.body.appendChild(tooltipEl);
+        }
+        
         // Generate grid cells with random commit densities (clumping heavier weights to look natural)
         for (let i = 0; i < totalCells; i++) {
             const cell = document.createElement('div');
             cell.className = 'heatmap-cell';
             
-            // Random distribution:
-            // 0: no commits (weight 0)
-            // 1: low commits (weight 1)
-            // 2: medium commits (weight 2)
-            // 3: high commits (weight 3)
-            // 4: max commits (weight 4)
             let weight = 0;
             const rand = Math.random();
             
@@ -70,9 +83,28 @@ document.addEventListener('DOMContentLoaded', () => {
             
             cell.classList.add(`cell-weight-${weight}`);
             
-            // Subtle tooltip displaying date/activity simulation on hover
-            const simulatedCommits = weight === 0 ? 'No commits' : `${weight * 2 + Math.floor(Math.random() * 3)} commits`;
-            cell.title = `${simulatedCommits} on simulated day ${i + 1}`;
+            // Calculate a real simulated date going back day-by-day
+            const cellDate = new Date();
+            cellDate.setDate(cellDate.getDate() - (totalCells - 1 - i));
+            const dateString = cellDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            
+            const simulatedCommits = weight === 0 ? 'No contributions' : `${weight * 2 + Math.floor(Math.random() * 3)} contributions`;
+            const tooltipText = `${simulatedCommits} on ${dateString}`;
+            
+            // Mouse event listeners for premium floating tooltip positioning
+            cell.addEventListener('mouseenter', () => {
+                tooltipEl.innerText = tooltipText;
+                tooltipEl.classList.add('visible');
+            });
+            
+            cell.addEventListener('mousemove', (e) => {
+                tooltipEl.style.left = `${e.pageX}px`;
+                tooltipEl.style.top = `${e.pageY - 12}px`;
+            });
+            
+            cell.addEventListener('mouseleave', () => {
+                tooltipEl.classList.remove('visible');
+            });
             
             heatmap.appendChild(cell);
         }
@@ -165,5 +197,162 @@ document.addEventListener('DOMContentLoaded', () => {
                 behavior: 'smooth'
             });
         });
+    }
+
+    // ---------------------------------------------
+    // 6. Fetch and Render Live Stats (LeetCode & Codewars)
+    // ---------------------------------------------
+    const updateLiveStats = async () => {
+        const leetcodeComment = document.getElementById('leetcode-comment');
+        const codewarsComment = document.getElementById('codewars-comment');
+        
+        if (!leetcodeComment && !codewarsComment) return;
+        
+        try {
+            const response = await fetch('/api/stats/');
+            if (response.ok) {
+                const data = await response.json();
+                
+                if (leetcodeComment && data.leetcode && !data.leetcode.error) {
+                    leetcodeComment.innerText = `(${data.leetcode.solved} solved)`;
+                }
+                
+                if (codewarsComment && data.codewars && !data.codewars.error) {
+                    codewarsComment.innerText = `(${data.codewars.rank} / ${data.codewars.solved} solved)`;
+                }
+            }
+        } catch (err) {
+            console.warn('Failed to fetch live developer stats:', err);
+        }
+    };
+    
+    updateLiveStats();
+
+    // ---------------------------------------------
+    // 7. Scroll Reveal Animation Effects
+    // ---------------------------------------------
+    const initScrollReveal = () => {
+        const cards = document.querySelectorAll('.bento-card');
+        
+        const observerOptions = {
+            root: null,
+            threshold: 0.05,
+            rootMargin: '0px 0px -40px 0px'
+        };
+        
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-visible');
+                } else {
+                    entry.target.classList.remove('reveal-visible');
+                }
+            });
+        };
+        
+        const observer = new IntersectionObserver(revealCallback, observerOptions);
+        
+        cards.forEach(card => {
+            card.classList.add('reveal-hidden');
+            observer.observe(card);
+        });
+    };
+
+    if ('IntersectionObserver' in window) {
+        initScrollReveal();
+    }
+
+    // ---------------------------------------------
+    // 8. Projects Tag Filter System
+    // ---------------------------------------------
+    const initProjectsFilter = () => {
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectBoxes = document.querySelectorAll('.project-box');
+        
+        if (filterBtns.length === 0 || projectBoxes.length === 0) return;
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Toggle active button highlight
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filterVal = btn.getAttribute('data-filter').toLowerCase().trim();
+                
+                projectBoxes.forEach(box => {
+                    const tagsAttr = box.getAttribute('data-tags') || '';
+                    const tags = tagsAttr.split(',').map(t => t.trim().toLowerCase());
+                    
+                    if (filterVal === 'all' || tags.includes(filterVal)) {
+                        box.style.display = 'flex';
+                        setTimeout(() => {
+                            box.classList.remove('filtered-out');
+                        }, 10);
+                    } else {
+                        box.classList.add('filtered-out');
+                        setTimeout(() => {
+                            if (box.classList.contains('filtered-out')) {
+                                box.style.display = 'none';
+                            }
+                        }, 300);
+                    }
+                });
+            });
+        });
+    };
+
+    initProjectsFilter();
+
+    // ---------------------------------------------
+    // 9. Sticky Header Border Scroll Controller
+    // ---------------------------------------------
+    const headerEl = document.querySelector('.bento-header');
+    if (headerEl) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                headerEl.style.borderColor = 'var(--border-color)';
+            } else {
+                headerEl.style.borderColor = 'transparent';
+            }
+        });
+    }
+
+    // ---------------------------------------------
+    // 10. Scrollspy Navigation Highlighter
+    // ---------------------------------------------
+    const initScrollspy = () => {
+        const sections = document.querySelectorAll('section[id], div[id="projects"], div[id="work"], div[id="contact"]');
+        const navLinks = document.querySelectorAll('.header-nav a');
+        
+        if (sections.length === 0 || navLinks.length === 0) return;
+        
+        const observerOptions = {
+            root: null,
+            threshold: 0.2,
+            rootMargin: '-80px 0px -40% 0px'
+        };
+        
+        const spyCallback = (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        const href = link.getAttribute('href');
+                        if (href === `#${id}`) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        };
+        
+        const observer = new IntersectionObserver(spyCallback, observerOptions);
+        sections.forEach(section => observer.observe(section));
+    };
+
+    if ('IntersectionObserver' in window) {
+        initScrollspy();
     }
 });

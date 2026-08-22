@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'portfolio/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'portfolio/css/style.css' %}?v=1.3">
 </head>
 <body>
 
@@ -48,9 +48,7 @@
             <div class="profile-tagline">{{ bio.sub_title }}</div>
             
             <div class="profile-description">
-                <p>Hi, I'm Farhan (known as <a href="{{ bio.github_url }}" class="highlight-link" target="_blank">0xFarhan</a> on the internet), currently an undergraduate.I started coding with curiosity about how software works, and that curiosity grew into a passion for building practical applications. Since then, I've been exploring Python, Django, AI/ML, and Machine Learning while continuously building and experimenting with new projects.</p>
-                <p>I mainly work with Python, SQL, Java, and Django. I have a deep admiration for the Unix philosophy, minimalism, and open-source software.</p>
-                <p>My interests include backend systems, database performance, and container orchestration. I also self-host my own home servers and manage networking systems inside my Homelab.</p>
+                {{ bio.about_text|linebreaks }}
             </div>
             
             <div class="profile-links">
@@ -125,19 +123,19 @@
                 </div>
                 <div class="social-meta">
                     <span class="title">LeetCode</span>
-                    <span class="comment">(problem solving)</span>
+                    <span class="comment" id="leetcode-comment">(problem solving)</span>
                 </div>
             </div>
 
             <!-- Card 4b: Codewars Widget (Spans 1 column) -->
             <div class="bento-card social-card codewars-card">
-                <a href="https://www.codewars.com/users/Syedfarhan078" target="_blank" class="card-link-overlay"></a>
+                <a href="https://www.codewars.com/users/syedfarhan78" target="_blank" class="card-link-overlay"></a>
                 <div class="social-icon-wrapper">
                     <i class="fas fa-fire"></i>
                 </div>
                 <div class="social-meta">
                     <span class="title">Codewars</span>
-                    <span class="comment">(solve katas)</span>
+                    <span class="comment" id="codewars-comment">(solve katas)</span>
                 </div>
             </div>
 
@@ -190,9 +188,19 @@
                     <i class="fas fa-code-branch icon-accent"></i>
                     <span>Projects</span>
                 </div>
+
+                {% if tags %}
+                <div class="projects-filter-container">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    {% for tag in tags %}
+                    <button class="filter-btn" data-filter="{{ tag|lower }}">{{ tag }}</button>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
                 <div class="projects-list-wrapper">
                     {% for project in projects %}
-                    <div class="project-box">
+                    <div class="project-box" data-tags="{{ project.tech_stack|lower }}">
                         <div class="project-box-header">
                             <h3 class="project-title">{{ project.title }}</h3>
                             <div class="project-links">
@@ -283,6 +291,6 @@
     <button id="back-to-top" aria-label="Back to Top"><i class="fas fa-arrow-up"></i></button>
 
     <!-- Custom JavaScript -->
-    <script src="{% static 'portfolio/js/script.js' %}"></script>
+    <script src="{% static 'portfolio/js/script.js' %}?v=1.3"></script>
 </body>
 </html>

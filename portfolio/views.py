@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from django.core.cache import cache
+import requests
 from .models import Bio, Skill, Project, Experience, ContactMessage
 
 def get_default_bio():
@@ -36,11 +38,23 @@ def home_view(request):
     projects = Project.objects.all()
     experiences = Experience.objects.all()
 
+    # Extract unique tech tags from project tech stacks
+    all_tags = set()
+    for p in projects:
+        if p.tech_stack:
+            for t in p.tech_stack.split(','):
+                cleaned_tag = t.strip()
+                if cleaned_tag:
+                    # Keep casing consistent
+                    all_tags.add(cleaned_tag)
+    tags = sorted(list(all_tags))
+
     context = {
         'bio': bio,
         'skills': skills,
         'projects': projects,
         'experiences': experiences,
+        'tags': tags,
     }
     return render(request, 'portfolio/index.html', context)
 
@@ -126,3 +140,77 @@ def api_about(request):
         'sub_title': bio.sub_title,
         'about': bio.about_text,
     })
+
+def api_live_stats(request):
+    cache_key = "live_developer_stats"
+    cached_stats = cache.get(cache_key)
+    
+    if cached_stats:
+        return JsonResponse(cached_stats)
+        
+    stats = {
+        'leetcode': {'solved': '30+', 'error': False},
+        'codewars': {'solved': '10+', 'rank': '8 kyu', 'error': False}
+    }
+    
+    bio = Bio.objects.first()
+    leetcode_username = "Syedfarhan078"
+    codewars_username = "syedfarhan78"
+    if bio and bio.github_url:
+        leetcode_username = bio.github_url.rstrip('/').split('/')[-1]
+        
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
+        'Content-Type': 'application/json'
+    }
+    
+    # 1. Fetch Codewars
+    try:
+        cw_res = requests.get(f'https://www.codewars.com/api/v1/users/{codewars_username}', timeout=5)
+        if cw_res.status_code == 200:
+            cw_data = cw_res.json()
+            stats['codewars']['solved'] = cw_data.get('codeChallenges', {}).get('totalCompleted', 10)
+            stats['codewars']['rank'] = cw_data.get('ranks', {}).get('overall', {}).get('name', '8 kyu')
+        else:
+            stats['codewars']['error'] = True
+    except Exception:
+        stats['codewars']['error'] = True
+
+    # 2. Fetch LeetCode
+    try:
+        lc_payload = {
+            "query": """
+            query userProblemsSolved($username: String!) {
+              matchedUser(username: $username) {
+                submitStats {
+                  acSubmissionNum {
+                    difficulty
+                    count
+                  }
+                }
+              }
+            }
+            """,
+            "variables": {"username": leetcode_username}
+        }
+        lc_res = requests.post('https://leetcode.com/graphql', json=lc_payload, headers=headers, timeout=5)
+        if lc_res.status_code == 200:
+            lc_data = lc_res.json()
+            user_data = lc_data.get('data', {}).get('matchedUser', None)
+            if user_data:
+                stats_list = user_data.get('submitStats', {}).get('acSubmissionNum', [])
+                for item in stats_list:
+                    if item.get('difficulty') == 'All':
+                        stats['leetcode']['solved'] = item.get('count', 30)
+                        break
+            else:
+                stats['leetcode']['error'] = True
+        else:
+            stats['leetcode']['error'] = True
+    except Exception:
+        stats['leetcode']['error'] = True
+        
+    if not stats['leetcode']['error'] and not stats['codewars']['error']:
+        cache.set(cache_key, stats, 3600)
+        
+    return JsonResponse(stats)

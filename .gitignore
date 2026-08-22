@@ -32,5 +32,4 @@ desktop.ini
 staticfiles/
 
 #json files
-portfolio_data.json
-portfolio_data_utf8.json
+*.json
